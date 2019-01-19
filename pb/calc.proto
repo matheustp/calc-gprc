@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package calc;
+
+option go_package="calcpb";
+
+service Calc {
+    rpc FindMaximum(stream FindMaximumRequest) returns (stream FindMaximumResponse){};
+    rpc ComputeAverage(stream ComputeAverageRequest) returns (ComputeAverageResponse) {};
+    rpc PrimeNumberDecompose(PrimeNumberDecomposerRequest) returns (stream PrimeNumberDecomposerResponse){};
+    rpc Calculate(CalculateRequest) returns (CalculateResponse){};
+    rpc CalculateWithDeadline(CalculateWithDeadlineRequest) returns (CalculateWithDeadlineResponse){};
+}
+
+message FindMaximumRequest {
+    int32 num = 1;
+}
+
+message FindMaximumResponse {
+    int32 max = 1;
+}
+
+message ComputeAverageRequest {
+    int32 num = 1;
+}
+
+message ComputeAverageResponse {
+    float result =1;
+}
+
+message PrimeNumberDecomposerRequest {
+    int32 number = 1;
+}
+
+message PrimeNumberDecomposerResponse {
+    int32 result = 1;
+}
+
+message CalculateRequest {
+    float num1 = 1;
+    float num2 = 2;
+    Operation operation = 3;
+}
+
+message CalculateResponse {
+    float result = 1;
+}
+
+enum Operation {
+    UNSET = 0;
+    SUM = 1;
+    DIFF = 2;
+    DIVIDE = 3;
+    MULTIPLY = 4;
+}
+
+
+message CalculateWithDeadlineRequest {
+    float num1 = 1;
+    float num2 = 2;
+    Operation operation = 3;
+}
+
+message CalculateWithDeadlineResponse {
+    float result = 1;
+}
