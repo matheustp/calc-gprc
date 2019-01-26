@@ -1,0 +1,289 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "pb/calc.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/calc/calculate": {
+      "post": {
+        "operationId": "Calculate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/calcCalculateResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/calcCalculateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Calc"
+        ]
+      }
+    },
+    "/v1/calc/compute-average": {
+      "post": {
+        "operationId": "ComputeAverage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/calcComputeAverageResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/calcComputeAverageRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Calc"
+        ]
+      }
+    },
+    "/v1/calc/find-maximum": {
+      "post": {
+        "operationId": "FindMaximum",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "$ref": "#/x-stream-definitions/calcFindMaximumResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/calcFindMaximumRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Calc"
+        ]
+      }
+    },
+    "/v1/calc/prime-number-decompose": {
+      "post": {
+        "operationId": "PrimeNumberDecompose",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "$ref": "#/x-stream-definitions/calcPrimeNumberDecomposerResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/calcPrimeNumberDecomposerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Calc"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "calcCalculateRequest": {
+      "type": "object",
+      "properties": {
+        "num1": {
+          "type": "number",
+          "format": "float"
+        },
+        "num2": {
+          "type": "number",
+          "format": "float"
+        },
+        "operation": {
+          "$ref": "#/definitions/calcOperation"
+        }
+      }
+    },
+    "calcCalculateResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "calcCalculateWithDeadlineResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "calcComputeAverageRequest": {
+      "type": "object",
+      "properties": {
+        "num": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "calcComputeAverageResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "calcFindMaximumRequest": {
+      "type": "object",
+      "properties": {
+        "num": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "calcFindMaximumResponse": {
+      "type": "object",
+      "properties": {
+        "max": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "calcOperation": {
+      "type": "string",
+      "enum": [
+        "UNSET",
+        "SUM",
+        "DIFF",
+        "DIVIDE",
+        "MULTIPLY"
+      ],
+      "default": "UNSET"
+    },
+    "calcPrimeNumberDecomposerRequest": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "calcPrimeNumberDecomposerResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeStreamError": {
+      "type": "object",
+      "properties": {
+        "grpc_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "http_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "http_status": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  },
+  "x-stream-definitions": {
+    "calcFindMaximumResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/calcFindMaximumResponse"
+        },
+        "error": {
+          "$ref": "#/definitions/runtimeStreamError"
+        }
+      },
+      "title": "Stream result of calcFindMaximumResponse"
+    },
+    "calcPrimeNumberDecomposerResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/calcPrimeNumberDecomposerResponse"
+        },
+        "error": {
+          "$ref": "#/definitions/runtimeStreamError"
+        }
+      },
+      "title": "Stream result of calcPrimeNumberDecomposerResponse"
+    }
+  }
+}

@@ -2,14 +2,36 @@ syntax = "proto3";
 
 package calc;
 
+import "google/api/annotations.proto";
+
 option go_package="calcpb";
 
 service Calc {
-    rpc FindMaximum(stream FindMaximumRequest) returns (stream FindMaximumResponse){};
-    rpc ComputeAverage(stream ComputeAverageRequest) returns (ComputeAverageResponse) {};
-    rpc PrimeNumberDecompose(PrimeNumberDecomposerRequest) returns (stream PrimeNumberDecomposerResponse){};
-    rpc Calculate(CalculateRequest) returns (CalculateResponse){};
-    rpc CalculateWithDeadline(CalculateWithDeadlineRequest) returns (CalculateWithDeadlineResponse){};
+    rpc FindMaximum(stream FindMaximumRequest) returns (stream FindMaximumResponse) {
+        option (google.api.http) = {
+            post: "/v1/calc/find-maximum"
+            body: "*"
+        };
+    };
+    rpc ComputeAverage(stream ComputeAverageRequest) returns (ComputeAverageResponse) {
+        option (google.api.http) = {
+            post: "/v1/calc/compute-average"
+            body: "*"
+        };
+    };
+    rpc PrimeNumberDecompose(PrimeNumberDecomposerRequest) returns (stream PrimeNumberDecomposerResponse) {
+        option (google.api.http) = {
+            post: "/v1/calc/prime-number-decompose"
+            body: "*"
+        };
+    };
+    rpc Calculate(CalculateRequest) returns (CalculateResponse) {
+        option (google.api.http) = {
+            post: "/v1/calc/calculate"
+            body: "*"
+        };
+    };
+    rpc CalculateWithDeadline(CalculateWithDeadlineRequest) returns (CalculateWithDeadlineResponse) {}
 }
 
 message FindMaximumRequest {
